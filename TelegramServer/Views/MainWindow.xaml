@@ -1,0 +1,115 @@
+﻿<local:BaseWindow x:Class="TelegramServer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TelegramServer.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:viewmodel="clr-namespace:TelegramServer.ViewModel"
+        mc:Ignorable="d"
+        Title="LTelegram Server" MinHeight="450" MinWidth="800" 
+        Height="550" Width="900"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="False"
+        WindowStyle="None"
+        UseLayoutRounding="True"
+        FontFamily="../Resources/Fonts/OpenSans/#Open Sans"
+        Icon="../Avatar/favicon.png">
+    <Window.DataContext>
+        <viewmodel:ServerViewModel/>
+    </Window.DataContext>
+    <Window.BorderBrush>
+        <SolidColorBrush Opacity="0"/>
+    </Window.BorderBrush>
+    <Window.Background>
+        <SolidColorBrush Opacity ="1" Color="#0E1621"/>
+    </Window.Background>
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" GlassFrameThickness="0"/>
+    </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <ResourceDictionary Source="../Resources/MWDictionary.xaml"/>
+    </Window.Resources>
+    <Border x:Name="MainBorder" CornerRadius="0" BorderThickness="1,1,1,1">
+        <Grid Style="{StaticResource WindowMainPanelStyle}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="23"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border x:Name="TopBorder" Grid.Row="0" Style="{StaticResource TopBorderStyle}" MouseLeftButtonDown="brdHeader_MouseLeftButtonDown" MouseLeftButtonUp="brdHeader_MouseLeftButtonUp" MouseMove="brdHeader_MouseMove">
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Stretch" Orientation="Horizontal">
+                    <Button x:Name="Minimize" Click="Minimize_Click" Style="{StaticResource MinimizeButton}"/>
+                    <Button x:Name="Maximize" Click="Maximize_Click" Style="{StaticResource MaximizeButton}"/>
+                    <Button x:Name="Close" Click="Close_Click" Style="{StaticResource CloseButton}"/>
+                </StackPanel>
+            </Border>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="6*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <WrapPanel Grid.Row="0">
+                        <TextBlock Text="IP ->" 
+                           Grid.Row="0" Grid.Column="0" 
+                           Foreground="LightBlue" FontSize="24" 
+                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="18,0,0,0"/>
+                        <TextBlock Text=" 127.0.0.1" 
+                           Grid.Row="0" Grid.Column="0" 
+                           Foreground="LightGreen" FontSize="24" 
+                           VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    </WrapPanel>
+                    <WrapPanel Grid.Row="1">
+                        <TextBlock Text="Port ->" 
+                           Grid.Row="0" Grid.Column="0" 
+                           Foreground="LightBlue" FontSize="24" 
+                           VerticalAlignment="Center" HorizontalAlignment="Right" Margin="18,0,0,0"/>
+                        <TextBlock Text=" 9001" 
+                           Grid.Row="0" Grid.Column="0" 
+                           Foreground="LightGreen" FontSize="24" 
+                           VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    </WrapPanel>
+                </Grid>
+                <WrapPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Content="Start" FontSize="24" Height="42" Margin="0,0,30,0" Command="{Binding StartServerCommand}"/>
+                    <Button Content="Stop" FontSize="24" Height="42" Margin="30,0,0,0" Command="{Binding StopServerCommand}"/>
+                </WrapPanel>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" BorderThickness="2" BorderBrush="Gray" Background="Black">
+                        <ListView Grid.Row="1" Grid.ColumnSpan="2"
+                          ItemsSource="{Binding LogsError}"
+                          ItemContainerStyle="{StaticResource LogItemError}"
+                          ScrollViewer.ScrollChanged="ListView_ScrollChanged">
+                        </ListView>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="1" BorderThickness="2" BorderBrush="Gray" Background="Black">
+                        <ListView Grid.Row="1" Grid.ColumnSpan="2"
+                          ItemsSource="{Binding Logs}"
+                          ItemContainerStyle="{StaticResource LogItem}"
+                          ScrollViewer.ScrollChanged="ListView_ScrollChanged">
+                        </ListView>
+                    </Border>
+                </Grid>
+                <Border Grid.Row="1" Grid.Column="1" BorderThickness="2" BorderBrush="Gray" Background="Black">
+                    <ListView Grid.Row="1" Grid.ColumnSpan="2"
+                          ItemsSource="{Binding LogsMain}"
+                          ItemContainerStyle="{StaticResource LogItem}"
+                          ScrollViewer.ScrollChanged="ListView_ScrollChanged">
+                    </ListView>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</local:BaseWindow>

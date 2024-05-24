@@ -1,0 +1,106 @@
+﻿<Page x:Class="TelegramLite.Views.EntryPages.Page2"  
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TelegramLite.Views.EntryPages"
+      xmlns:viewmodel="clr-namespace:TelegramLite.ViewModel"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Page2"
+      x:Name="Page2Name">
+
+    <Page.DataContext>
+        <viewmodel:EntryViewModel/>
+    </Page.DataContext>
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/BWDictionary.xaml"/>
+                <ResourceDictionary Source="../../Resources/EWDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="56"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Style="{StaticResource BackButton}" Command="{Binding BackCommand}" CommandParameter="{Binding ElementName=Page2Name}" HorizontalAlignment="Left" Margin="8,0,0,0"/>
+        <Grid Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Text="Log in" Foreground="White" FontSize="22" FontWeight="SemiBold"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Text="Please enter your username and password" 
+                       Width="300" TextWrapping="Wrap"  Margin="0,0,0,7"
+                       Foreground="#72879B" FontSize="15" FontWeight="Regular"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Username: "
+                       Foreground="#72879B" FontSize="15" FontWeight="Regular"/>
+            <TextBox x:Name="UsernameLogin"
+                     MaxWidth="300"
+                     PreviewTextInput="PreviewTextInputUP"
+                     DataObject.Pasting="TextBoxPastingUP"
+                     materialDesign:TextFieldAssist.HasClearButton="True"
+                     Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Grid.Row="2"
+                     Grid.Column="1"
+                     BorderBrush="#313C49"
+                     CaretBrush="White"
+                     Foreground="#F5F5F5"
+                     MaxLength="32"
+                     Margin="0,0,0,20"
+                     Height="Auto"
+                     MaxHeight="220"
+                     />
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Password:"
+                       Foreground="#72879B" FontSize="15" FontWeight="Regular"/>
+            <PasswordBox x:Name="PassLogin"
+                         MaxWidth="300"
+                     PreviewTextInput="PreviewTextInputUP"
+                     DataObject.Pasting="TextBoxPastingUP"
+                     materialDesign:TextFieldAssist.HasClearButton="True"
+                     Style="{StaticResource MaterialDesignRevealPasswordBox}"
+                     materialDesign:PasswordBoxAssist.Password="{Binding PasswordText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Grid.Row="3"
+                     Grid.Column="1"
+                     BorderBrush="#313C49"
+                     CaretBrush="White"
+                     Foreground="#F5F5F5"
+                     MaxLength="30"
+                     Margin="0,0,0,20"
+                     Height="Auto"
+                     MaxHeight="220"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding ResultText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       Foreground="Red" FontSize="15" FontWeight="Regular" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button x:Name="LogIn"  Grid.Row="4" Grid.Column="1"
+                HorizontalAlignment="Center" 
+                Content="LOG IN" 
+                Width="300" Height="56" 
+                Foreground="White" FontSize="17" FontWeight="Normal"
+                materialDesign:RippleAssist.Feedback="#4F8CC4"
+                Command="{Binding LoginCommand}"
+                CommandParameter="{Binding ElementName=Page2Name}"/>
+            <Button x:Name="ToRegister" Grid.Row="5" Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right" Margin="0,0,24,0"
+                    Content="Or register"
+                    Foreground="#3476AB"
+                    BorderThickness="0"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Style="{StaticResource ToRegisterButton}"
+                    Command="{Binding ToRegisterCommand}"
+                    CommandParameter="{Binding ElementName=Page2Name}"/> 
+        </Grid>
+    </Grid>
+</Page>
